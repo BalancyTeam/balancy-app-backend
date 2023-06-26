@@ -1,4 +1,4 @@
-import { User } from 'src/users/entities/user.entity';
+import { UserEntity } from 'src/users/entities/user.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 enum Type {
@@ -17,9 +17,9 @@ enum Priority {
 }
 
 @Entity({ name: 'tasks' })
-export class Task {
+export class TaskEntity {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column({ type: 'enum', enum: Type, default: Type.Task })
   tipe: Type;
@@ -48,6 +48,6 @@ export class Task {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   completeDate: Date;
 
-  @ManyToOne(() => User, (user) => user.tasks)
+  @ManyToOne(() => UserEntity, (user) => user.tasks, { eager: true })
   userId: number;
 }

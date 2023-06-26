@@ -10,12 +10,13 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { User as UserDecorator } from 'src/common';
-import { User } from 'src/users/entities/user.entity';
+import { UserEntity } from 'src/users/entities/user.entity';
+
+import { User } from '@/common/decorators';
 
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TasksService } from './tasks.service';
-import { TaskResponseInterface } from './types/types-response.interface';
+import { TaskResponseI } from './types/types-response.interface';
 
 @Controller('tasks')
 @ApiTags('Tasks')
@@ -25,9 +26,9 @@ export class TasksController {
 
   @Post()
   async createTask(
-    @UserDecorator() currentUser: User,
+    @User() currentUser: UserEntity,
     @Body('task') createTaskDto: CreateTaskDto,
-  ): Promise<TaskResponseInterface> {
+  ): Promise<TaskResponseI> {
     const task = await this.tasksService.createTask(currentUser, createTaskDto);
     return this.tasksService.buildTaskResponse(task);
   }
@@ -38,7 +39,7 @@ export class TasksController {
   }
 
   @Get(':id')
-  async getTaskById(@Param('id') id: string): Promise<TaskResponseInterface> {
+  async getTaskById(@Param('id') id: number): Promise<TaskResponseI> {
     const task = await this.tasksService.findOne(id);
     return this.tasksService.buildTaskResponse(task);
   }
@@ -49,7 +50,7 @@ export class TasksController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tasksService.remove(+id);
+  async deleteTask(@User('id') @Param('id') id: number) {
+    return await this.tasksService.deleteTask(id);
   }
 }
