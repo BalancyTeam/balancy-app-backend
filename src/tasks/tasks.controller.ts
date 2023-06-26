@@ -16,7 +16,7 @@ import { User } from '@/common/decorators';
 
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TasksService } from './tasks.service';
-import { TaskResponseI } from './types/types-response.interface';
+import { ITaskResponse } from './types/types-response.interface';
 
 @Controller('tasks')
 @ApiTags('Tasks')
@@ -28,7 +28,7 @@ export class TasksController {
   async createTask(
     @User() currentUser: UserEntity,
     @Body('task') createTaskDto: CreateTaskDto,
-  ): Promise<TaskResponseI> {
+  ): Promise<ITaskResponse> {
     const task = await this.tasksService.createTask(currentUser, createTaskDto);
     return this.tasksService.buildTaskResponse(task);
   }
@@ -39,7 +39,7 @@ export class TasksController {
   }
 
   @Get(':id')
-  async getTaskById(@Param('id') id: number): Promise<TaskResponseI> {
+  async getTaskById(@Param('id') id: number): Promise<ITaskResponse> {
     const task = await this.tasksService.findOne(id);
     return this.tasksService.buildTaskResponse(task);
   }

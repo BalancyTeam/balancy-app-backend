@@ -5,7 +5,7 @@ import { DeleteResult, Repository } from 'typeorm';
 
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskEntity } from './entities/task.entity';
-import { TaskResponseI } from './types/types-response.interface';
+import { ITaskResponse } from './types/types-response.interface';
 
 @Injectable()
 export class TasksService {
@@ -47,7 +47,7 @@ export class TasksService {
     return await this.taskRepository.delete({ id });
   }
 
-  buildTaskResponse(task: TaskEntity): TaskResponseI {
+  buildTaskResponse(task: TaskEntity): ITaskResponse {
     return { task };
   }
 }
