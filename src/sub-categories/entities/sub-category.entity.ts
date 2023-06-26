@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-import { User } from '@/users/entities/user.entity';
+import { UserEntity } from '@/users/entities/user.entity';
 
 import { CreateSubCategoryDto } from '../dto/create-sub-category.dto';
 
@@ -12,7 +12,7 @@ export class SubCategory {
   @Column({ nullable: false })
   name: string;
 
-  @ManyToOne(() => User, (subCategory) => subCategory.subCategories)
+  @ManyToOne(() => UserEntity, (subCategory) => subCategory.subCategories)
   userId: number;
 
   constructor(payload?: CreateSubCategoryDto) {

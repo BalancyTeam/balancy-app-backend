@@ -1,5 +1,5 @@
-import { Task } from '../entities/task.entity';
+import { TaskEntity } from '../entities/task.entity';
 
-export interface TaskResponseInterface {
-  task: Task;
+export interface ITaskResponse {
+  task: TaskEntity;
 }

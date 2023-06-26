@@ -1,6 +1,6 @@
 import { Exclude } from 'class-transformer';
 import { Role } from 'src/common';
-import { Task } from 'src/tasks/entities/task.entity';
+import { TaskEntity } from 'src/tasks/entities/task.entity';
 import {
   Column,
   CreateDateColumn,
@@ -16,7 +16,7 @@ import { SubCategory } from '@/sub-categories/entities/sub-category.entity';
 import { CreateUserDto } from '../dto/create-user.dto';
 
 @Entity()
-export class User {
+export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -63,8 +63,8 @@ export class User {
   @OneToMany(() => SubCategory, (subCategory) => subCategory.userId)
   subCategories: SubCategory[];
 
-  @OneToMany(() => Task, (task) => task.userId)
-  tasks: Task[];
+  @OneToMany(() => TaskEntity, (task) => task.userId)
+  tasks: TaskEntity[];
 
   constructor(user?: CreateUserDto) {
     if (!user) return;
